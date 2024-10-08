@@ -1,1 +1,1 @@
-# atheletes
+# athletes
