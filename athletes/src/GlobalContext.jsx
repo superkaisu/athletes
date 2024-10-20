@@ -3,7 +3,7 @@ import React from "react";
 import Athlete from "./Athlete";
 
 const initialAthleteState = {
-  selectedAthelete: null,
+  selectedAthlete: null,
 };
 
 const GlobalContext = createContext(initialAthleteState);
@@ -11,25 +11,25 @@ const GlobalContext = createContext(initialAthleteState);
 export const GlobalProvider = ({ children }) => {
   const [state, setState] = useState(initialAthleteState);
 
-  const selectAthlete = (athlete) => {
+  const selectAthlete = (userSelectedAthlete) => {
     const athlete = new Athlete(
-      athlete.id,
-      athlete.etunimi,
-      athlete.sukunimi,
-      athlete.kutsumanimi,
-      athlete.syntymävuosi,
-      athlete.paino,
-      athlete.kuva,
-      athlete.laji,
-      athlete.saavutukset
+      userSelectedAthlete.id,
+      userSelectedAthlete.etunimi,
+      userSelectedAthlete.sukunimi,
+      userSelectedAthlete.kutsumanimi,
+      userSelectedAthlete.syntymävuosi,
+      userSelectedAthlete.paino,
+      userSelectedAthlete.kuva,
+      userSelectedAthlete.laji,
+      userSelectedAthlete.saavutukset
     );
-    setState({ selectedAthelete: athlete });
+    setState({ selectedAthlete: athlete });
   };
 
   return (
     <GlobalContext.Provider
       value={{
-        selectedAthelete: state.selectedAthelete,
+        selectedAthelete: state.selectedAthlete,
         selectAthlete,
       }}
     >
@@ -37,4 +37,5 @@ export const GlobalProvider = ({ children }) => {
     </GlobalContext.Provider>
   );
 };
+
 export default GlobalContext;
