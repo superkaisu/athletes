@@ -13,9 +13,9 @@ export const getAllAthletes = async () => {
   }
 };
 
-export const getAthlete = async (searchWord) => {
+export const getAthlete = async (athleteJSON) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/athletes/${id}`); //Tässä täytyy välittää id parametrina
+    const response = await fetch(`${API_BASE_URL}/athletes/${athleteJSON.id}`); //Tässä täytyy välittää id parametrina
     const word = await response.json();
     return word;
   } catch (error) {
@@ -74,6 +74,30 @@ export const updateAthlete = async (athleteJSON) => {
     return data;
   } catch (error) {
     console.error("Error updating athlete", error);
+    throw error;
+  }
+};
+
+export const deleteAthlete = async (athleteJSON) => {
+  const path = `${API_BASE_URL}/athletes/${athleteJSON.id}`;
+
+  try {
+    const response = await fetch(path, {
+      method: "DELETE",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    });
+    const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return data;
+  } catch (error) {
+    console.error("Error deleting athlete", error);
     throw error;
   }
 };

@@ -12,18 +12,14 @@ import FetchData from "./components/FetchData";
 function App() {
   return (
     <div>
-      <GlobalContext.Provider value={{}}>
-        {
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<FetchData />} />
-              <Route path="/add" element={<AddData />} />
-              <Route path="/delete" element={<DeleteData />} />
-              <Route path="/update" element={<UpdateData />} />
-            </Routes>
-          </BrowserRouter>
-        }
-      </GlobalContext.Provider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<FetchData />} />
+          <Route path="/add" element={<AddData />} />
+          <Route path="/delete" element={<DeleteData />} />
+          <Route path="/update" element={<UpdateData />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
