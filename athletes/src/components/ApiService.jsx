@@ -27,7 +27,7 @@ export const getAthlete = async (searchWord) => {
 // Huomioi käyttöliittymässä kaikkien tarvittavien kenttien syöttäminen
 export const addNewAthlete = async (athleteJSON) => {
   //athleteJSON parametrina tälle funktiolle!!
-  const path = `${API_BASE_URL}/athletes`;
+  const path = `${API_BASE_URL}/athletes/lisaa`;
 
   console.log(wordString);
 

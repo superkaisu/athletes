@@ -98,8 +98,8 @@ app.get("/athletes/:id", (req, res) => {
   console.log("Last insert ID:", res.insertId);
 });*/
 
-//POST - insertId is the id of the athlete object that's held in GlobalContext after fetching data
-app.post("/lisaa", (req, res) => {
+//POST - WORKS! (Don't insert id, it's autoincrement)
+app.post("/athletes/lisaa", (req, res) => {
   let urheilija = req.body;
   console.log(urheilija);
   if (!urheilija) {
@@ -112,26 +112,29 @@ app.post("/lisaa", (req, res) => {
     urheilija,
     function (error, results, fields) {
       if (error) throw error;
-      return res.send(JSON.stringify({ id: results.insertId, ...urheilija }));
+      return res.send(JSON.stringify({ ...urheilija }));
     }
   );
 });
 
-//PUT - Update and delete data from the table athletes with id
-//Need to first fetch data of existing athlete??
+//PUT - Update data from the table athletes with id - WORKS! (provide id to url)
 app.put("/athletes/:id", (req, res) => {
+  const urheilija = req.body;
+  const id = req.params.id;
+
   conn.query(
     "UPDATE athletes SET ? WHERE id=?",
-    [urheilija, urheilija], //updates all info
-    (err, res) => {
+    [urheilija, id], //updates all info
+    (err, results) => {
       if (err) throw err;
 
-      console.log(`Changed ${res.changedRows} row(s)`);
+      console.log(`Changed ${results.changedRows} row(s)`);
+      res.send(JSON.stringify({ ...urheilija }));
     }
   );
 });
 
-//DELETE - Delete data from the table athletes with id
+//DELETE - Delete data from the table athletes with id - WORKS! (note auto increment in id)
 app.delete("/athletes/:id", (req, res) => {
   const urheilija = Number(req.params.id);
   if (!urheilija) {
@@ -140,9 +143,17 @@ app.delete("/athletes/:id", (req, res) => {
       .send({ error: true, message: "Urheilijaa ei löytynyt" });
   }
 
-  conn.query("DELETE FROM athletes WHERE id=?", urheilija, (err, res) => {
-    if (err) throw err;
-
-    console.log(`Deleted ${res.affectedRows} row(s)`);
+  conn.query("DELETE FROM athletes WHERE id=?", urheilija, (err, results) => {
+    if (err) {
+      return res
+        .status(500)
+        .send({ error: true, message: "Virhe tietokantaoperaatiossa" });
+    }
+    if (results.affectedRows === 0) {
+      return res
+        .status(404)
+        .send({ error: true, message: "Urheilijaa ei löytynyt" });
+    }
+    res.send({ message: "Urheilija poistettu onnistuneesti" });
   });
 });
