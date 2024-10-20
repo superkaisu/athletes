@@ -98,7 +98,7 @@ app.get("/athletes/:id", (req, res) => {
   console.log("Last insert ID:", res.insertId);
 });*/
 
-//POST - Kopioitua - mikä on insertId?
+//POST - insertId is the id of the athlete object that's held in GlobalContext after fetching data
 app.post("/lisaa", (req, res) => {
   let urheilija = req.body;
   console.log(urheilija);
