@@ -1,5 +1,5 @@
 import { useState, React } from "react";
-import { GlobalProvider } from "./GlobalContext";
+import GlobalProvider from "./GlobalContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ReactDOM from "react-dom/client";
 
